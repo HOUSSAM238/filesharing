@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shared Files</title>
+</head>
+<body>
+  <h2>Click a file to download</h2>
+  <ul id="fileList"></ul>
+
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBlpU7jfFgvC9X2_KNW-gOJb8AodWI9VS4",
+      authDomain: "gggg-9cc8d.firebaseapp.com",
+      projectId: "gggg-9cc8d",
+      storageBucket: "gggg-9cc8d.firebasestorage.app",
+      messagingSenderId: "897194810694",
+      appId: "1:897194810694:web:287162682bd15ed88bd947",
+      measurementId: "G-H0Q2N1RGPJ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    storage.ref("shared").listAll().then(res => {
+      res.items.forEach(item => {
+        item.getDownloadURL().then(url => {
+          let li = document.createElement("li");
+          li.innerHTML = `<a href="${url}" target="_blank">${item.name}</a>`;
+          document.getElementById("fileList").appendChild(li);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
